@@ -1,0 +1,64 @@
+1.Obtener todos los empleados que se dieron de alta antes del año 2018 y que pertenecen a un determinado departamento.  
+
+use bd_hospital;
+SELECT distinct emp.Emp_id, emp.Apellido, emp.Fecha_Alt, dept.DNombre AS NOMBRE_DEPARTAMENTO 
+FROM emp   
+INNER JOIN dept 
+WHERE Fecha_Alt 
+ORDER BY 2000-01-01 AND 2018-01-01;
+
+
+2.Crear un procedimiento almacenado que permita insertar un nuevo departamento. 
+ 
+use hospital;
+
+CREATE PROCEDURE INSERTA_NEW_DEPT(
+Dept_id			INT,
+DNombre			VARCHAR(50),
+ubicacion	    VARCHAR(50)	
+)
+INSERT INTO departamento values
+(Dept_id,
+DNombre,
+ubicacion);
+
+CALL INSERTA_NEW_DEPT(70, 'SALA COVID', 'PISO 04, SALA-10');
+
+
+3.Crear un procedimiento que recupere el promedio de edad de las personas por cada departamento.
+ 
+use bd_hospital;
+DELIMITER $
+CREATE PROCEDURE EDAD_PROMEDIO1(NDEP int)
+BEGIN
+     SELECT COUNT(*) AS DEPARTAMENTO, Edad as EDAD_PROMEDIO FROM emp WHERE Dept_No = NDEP GROUP BY Edad; 
+END $
+
+CALL EDAD_PROMEDIO1(15)
+
+
+4.Crear un procedimiento para devolver el apellido, oficio y salario, pasándole como parámetro el ID/numero del empleado. 
+
+use bd_hospital;
+DELIMITER $
+CREATE PROCEDURE MOSTRAR_EMPLEADOS_ID(id int)
+ BEGIN
+      SELECT Apellido AS NOMBRE_APELLIDO, Oficio AS PROFESION, Salario AS SUELDO FROM emp WHERE Emp_id = id;
+END $
+
+CALL MOSTRAR_EMPLEADOS_ID(1399)
+
+
+
+ 
+5.	Crear un procedimiento almacenado para dar de baja a un empleado pasándole como parámetro su apellido.
+  
+use bd_hospital;
+DELIMITER $
+CREATE PROCEDURE BAJA_EMPLEADO1(ape int)
+ 
+BEGIN
+	DELETE FROM emp WHERE Emp_id = id;
+END $
+
+call BAJA_EMPLEADO1(2667)
